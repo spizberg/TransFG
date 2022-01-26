@@ -82,8 +82,10 @@ def setup(args):
         num_classes = 120
     elif args.dataset == "INat2017":
         num_classes = 5089
+    elif args.dataset == "ID_SHOES":
+        num_classes = args.num_classes
 
-    model = VisionTransformer(config, args.img_size, zero_head=True, num_classes=num_classes,                                                   smoothing_value=args.smoothing_value)
+    model = VisionTransformer(config, args.img_size, zero_head=True, num_classes=num_classes, smoothing_value=args.smoothing_value)
 
     model.load_from(np.load(args.pretrained_dir))
     if args.pretrained_model is not None:
@@ -298,9 +300,11 @@ def main():
     # Required parameters
     parser.add_argument("--name", required=True,
                         help="Name of this run. Used for monitoring.")
-    parser.add_argument("--dataset", choices=["CUB_200_2011", "car", "dog", "nabirds", "INat2017"], default="CUB_200_2011",
+    parser.add_argument("--dataset", choices=["CUB_200_2011", "car", "dog", "nabirds", "INat2017", "ID_SHOES"], default="ID_SHOES",
                         help="Which dataset.")
-    parser.add_argument('--data_root', type=str, default='/opt/tiger/minist')
+    parser.add_argument("--num_classes", default=16, type=int,
+                        help="Number of classes")
+    parser.add_argument('--data_root', type=str, default='/home/nathan/Code/fg_dataset/')
     parser.add_argument("--model_type", choices=["ViT-B_16", "ViT-B_32", "ViT-L_16",
                                                  "ViT-L_32", "ViT-H_14"],
                         default="ViT-B_16",
@@ -362,7 +366,8 @@ def main():
 
     # if args.fp16 and args.smoothing_value != 0:
     #     raise NotImplementedError("label smoothing not supported for fp16 training now")
-    args.data_root = '{}/{}'.format(args.data_root, args.dataset)
+    # args.data_root = '{}/{}'.format(args.data_root, args.dataset)
+    args.data_root = '{}/images'.format(args.data_root)
     # Setup CUDA, GPU & distributed training
     if args.local_rank == -1:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

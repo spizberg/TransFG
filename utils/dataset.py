@@ -12,9 +12,36 @@ import matplotlib.pyplot as plt
 
 import torch
 from torch.utils.data import Dataset
-from torchvision.datasets import VisionDataset
+from torchvision.datasets import VisionDataset, ImageFolder
 from torchvision.datasets.folder import default_loader
 from torchvision.datasets.utils import download_url, list_dir, check_integrity, extract_archive, verify_str_arg
+from typing import Any, Callable, Optional
+
+IMG_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp')
+
+class ID_SHOES(ImageFolder):
+    def __init__(
+            self,
+            root: str,
+            transform: Optional[Callable] = None,
+            target_transform: Optional[Callable] = None,
+            loader: Callable[[str], Any] = default_loader,
+            is_valid_file: Optional[Callable[[str], bool]] = None,
+            is_train: bool = True
+    ):
+        if is_train:
+            self.root = join(root, "train")
+            super(ImageFolder, self).__init__(self.root, loader, IMG_EXTENSIONS if is_valid_file is None else None,
+                                          transform=transform,
+                                          target_transform=target_transform,
+                                          is_valid_file=is_valid_file)
+        else:
+            self.root = join(root, "val")
+            super(ImageFolder, self).__init__(self.root, loader, IMG_EXTENSIONS if is_valid_file is None else None,
+                                          transform=transform,
+                                          target_transform=target_transform,
+                                          is_valid_file=is_valid_file)
+                                          
 
 class CUB():
     def __init__(self, root, is_train=True, data_len=None, transform=None):
