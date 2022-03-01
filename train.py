@@ -302,9 +302,9 @@ def main():
                         help="Name of this run. Used for monitoring.")
     parser.add_argument("--dataset", choices=["CUB_200_2011", "car", "dog", "nabirds", "INat2017", "ID_SHOES"], default="ID_SHOES",
                         help="Which dataset.")
-    parser.add_argument("--num_classes", default=16, type=int,
+    parser.add_argument("--num_classes", default=15, type=int,
                         help="Number of classes")
-    parser.add_argument('--data_root', type=str, default='/home/nathan/Code/fg_dataset/')
+    parser.add_argument('--data_root', type=str, default='/home/joel/Idshoes2/test_model/version_1/CLASSIFICATION/DATASET_ALBUMENTATIONS')
     parser.add_argument("--model_type", choices=["ViT-B_16", "ViT-B_32", "ViT-L_16",
                                                  "ViT-L_32", "ViT-H_14"],
                         default="ViT-B_16",
