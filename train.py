@@ -354,7 +354,7 @@ def main():
                              "0 (default value): dynamic loss scaling.\n"
                              "Positive power of 2: static loss scaling value.\n")
 
-    parser.add_argument('--smoothing_value', type=float, default=0.0,
+    parser.add_argument('--smoothing_value', type=float, default=0.1,
                         help="Label smoothing value\n")
 
     parser.add_argument('--split', type=str, default='non-overlap',
