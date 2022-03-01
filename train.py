@@ -87,7 +87,7 @@ def setup(args):
 
     model = VisionTransformer(config, args.img_size, zero_head=True, num_classes=num_classes, smoothing_value=args.smoothing_value)
 
-    model.load_from(np.load(args.pretrained_dir))
+    # model.load_from(np.load(args.pretrained_dir))
     if args.pretrained_model is not None:
         pretrained_model = torch.load(args.pretrained_model)['model']
         model.load_state_dict(pretrained_model)
